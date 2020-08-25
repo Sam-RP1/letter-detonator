@@ -1,0 +1,88 @@
+@import '../../styles/mixins/transition';
+@import '../../styles/mixins/transform';
+
+h1, h2, h3, p {
+  font-family: 'Cantarell', sans-serif;
+  font-weight: 700;
+}
+
+a {
+  text-decoration: underline;
+  content: inherit;
+}
+
+a:link, a:visited, a:hover  {
+  color: #0080b3;
+  background-color: transparent;
+  text-decoration: none;
+}
+
+#modal-container {
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+#menu-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
+  width: 500px;
+  max-height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  border: 3px solid #0080b3;
+  border-radius: 10px;
+  background-color: #fff;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#menu-modal {
+  h1 {
+    height: auto;
+    width: auto;
+    margin: 15px 0px 5px 0px;
+    font-size: 2em;
+    font-weight: 700;
+    font-style: italic;
+    text-transform: uppercase;
+    text-align: center;
+    color: #000;
+  }
+}
+
+.subheading {
+  margin: 0px 0px 30px 0px;
+}
+
+.menu-button {
+  height: auto;
+  width: 275px;
+  max-width: 90%;
+  margin-bottom: 15px;
+  text-align: center;
+  border-radius: 5px;
+  border: 3px solid #0080b3;
+  cursor: pointer;
+  @include transition(0.2s);
+}
+
+.menu-button:hover {
+  @include transform(scale(0.97));
+}
+
+.menu-button {
+  p {
+    margin: 0px;
+  }
+}
