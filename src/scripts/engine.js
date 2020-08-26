@@ -28,11 +28,15 @@ const loop = engineLogic => {
   }
   meter.tick();
   ctx.clearRect(0, 0, c.width, c.height);
-  engineLogic(frames);
-  if (engineLoop === undefined) {
-    engineLoop = () => {
-      loop(engineLogic);
-    };
+  if (end !== true) {
+    engineLogic(frames);
+    if (engineLoop === undefined) {
+      engineLoop = () => {
+        loop(engineLogic);
+      };
+    }
+    animation = window.requestAnimationFrame(engineLoop);
+  } else {
+    gameOver();
   }
-  animation = window.requestAnimationFrame(engineLoop);
 };

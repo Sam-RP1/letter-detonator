@@ -61,6 +61,7 @@ module.exports = {
         { from: 'src/scripts/fpsmeter.min.js', to: 'scripts' },
         { from: 'src/scripts/engine.js', to: 'scripts' },
         { from: 'src/scripts/letter-detonator.js', to: 'scripts' },
+        { from: 'src/scripts/menu-controller.js', to: 'scripts' },
       ],
     }),
   ],

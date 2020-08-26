@@ -66,6 +66,7 @@ const particles = [];
 let letters = [];
 let score = 0;
 let highScore = 0;
+let end = false;
 let page = document.getElementById('root');
 
 /**
@@ -235,16 +236,16 @@ const removeLetter = (i, letter) => {
 * Else game continues.
 */
 const destroyLetters = (frames) => {
+  let i = 0;
   for (const item of letters) {
     if (isIntersectingPlayer(item, letter.size, center, playerCharacter.radius)) {
-      window.alert('Game Over!');
-      score = 0;
-      letters = [];
+      i++;
     } else {
       item.x += item.speedX * frames;
       item.y += item.speedY * frames;
     }
   }
+  end = i > 0 ? true : false;
 };
 
 //------------- KEY HANDLERS -------------//
@@ -272,16 +273,15 @@ const keyDownHandler = (e) => {
 const keyUpHandler = (e) => {
   if (e.keyCode === 27) {
     if (animation === undefined) {
-      animation = window.requestAnimationFrame(engineLoop);
+      continueGame();
     } else {
-      window.cancelAnimationFrame(animation);
-      animation = undefined;
+      openPauseMenu();
     }
   }
 };
 
 //------------- LOOP -------------//
-loop(function (frames) {
+const letterdetonator = function (frames) {
   // Player character
   paintCircle(center.x, center.y, playerCharacter.radius, playerCharacter.color);
   // Paint Letters
@@ -300,7 +300,7 @@ loop(function (frames) {
   generateLetters();
   destroyLetters(frames);
   levelHandler();
-});
+}
 
 //------------- EVENTLISTENERS & EXTRAS -------------//
 document.addEventListener('keydown', keyDownHandler);
