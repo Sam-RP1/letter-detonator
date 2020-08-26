@@ -3,25 +3,6 @@ const center = {
   x: c.width / 2,
   y: c.height / 2
 };
-const playerCharacter = {
-  radius: 15,
-  color: '#000'
-};
-const letter = {
-  font: '20px Courier',
-  color: '#0080b3',
-  size: 30,
-  chance: 0.01,
-  maxSpeed: 1.5,
-  minSpeed: 0.5
-};
-const tracker = {
-  font: '24px Arial',
-  color: '#0080b3',
-  x: 15,
-  y: 30,
-  right: c.width - 100
-};
 const levels = [
   {
     id: '1',
@@ -49,23 +30,10 @@ const levels = [
     textColor: '#',
   }
 ];
-const particleProperties = {
-  shrink: 0.15,
-  maxAlpha: 0.8,
-  maxRadius: 5,
-  maxSpeedX: 3,
-  maxSpeedY: 3,
-  minAlpha: 0.3,
-  minRadius: 1,
-  minSpeedX: -3,
-  minSpeedY: -3,
-  total: 100
-};
 const explosionColors = [['226', '40', '34'], ['226', '56', '34'], ['226', '72', '34'], ['226', '88', '34'], ['226', '104', '34'], ['226', '120', '34']];
 const particles = [];
 let letters = [];
 let score = 0;
-let highScore = 0;
 let end = false;
 let page = document.getElementById('root');
 

@@ -62,6 +62,7 @@ module.exports = {
         { from: 'src/scripts/engine.js', to: 'scripts' },
         { from: 'src/scripts/letter-detonator.js', to: 'scripts' },
         { from: 'src/scripts/menu-controller.js', to: 'scripts' },
+        { from: 'src/scripts/ld-storage-controller.js', to: 'scripts' },
       ],
     }),
   ],
