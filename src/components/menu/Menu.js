@@ -6,6 +6,7 @@ import '../../styles/root.scss';
 import './Menu.scss';
 
 import HomeMenu from './Menu-home.js';
+import HighscoreMenu from './Menu-highscore.js';
 import PauseMenu from './Menu-pause.js';
 import GameoverMenu from './Menu-gameover.js';
 
@@ -22,6 +23,7 @@ class Menu extends Component {
     return (
       <div id="menu-modal">
         <HomeMenu />
+        <HighscoreMenu />
         <PauseMenu />
         <GameoverMenu />
       </div>

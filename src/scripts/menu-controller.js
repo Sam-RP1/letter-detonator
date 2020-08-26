@@ -8,6 +8,8 @@ const startGame = () => {
 
 const openHighscores = () => {
   console.log("OPEN HIGHSCORES");
+  clearMenu();
+  document.getElementById('high-score-menu').style.display = 'flex';
 }
 
 const openHowToPlay = () => {
@@ -72,6 +74,7 @@ const openHome = () => {
 
 const clearMenu = () => {
   document.getElementById('home-menu').style.display = 'none';
+  document.getElementById('high-score-menu').style.display = 'none';
   document.getElementById('pause-menu').style.display = 'none';
   document.getElementById('game-over-menu').style.display = 'none';
 }

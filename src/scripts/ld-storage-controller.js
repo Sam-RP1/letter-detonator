@@ -73,20 +73,104 @@ const gameDefaults = {
     minSpeedY: -3,
     total: 100
   },
-  scores: [
-    "Test User",
-    "0",
-    "achieved: 25/08/2020"
-  ],
+  scores: {
+    1: {
+      name: "Test User",
+      level: 0,
+      score: 0,
+      achieved: "25/08/2020"
+    },
+    2: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    3: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    4: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    5: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    6: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    7: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    8: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    9: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    },
+    10: {
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
+    }
+  },
   initialised: "1"
 };
 
 // Customisable Settings & Variables
-const playerCharacter = {};
-const letter = {};
-const tracker = {};
-const particleProperties = {};
+const playerCharacter = {
+  radius: undefined,
+  color: undefined
+};
+const letter = {
+  font: undefined,
+  color: undefined,
+  size: undefined,
+  chance: undefined,
+  maxSpeed: undefined,
+  minSpeed: undefined
+};
+const tracker = {
+  font: undefined,
+  color: undefined,
+  x: undefined,
+  y: undefined
+};
+const particleProperties = {
+  shrink: undefined,
+  maxAlpha: undefined,
+  maxRadius: undefined,
+  maxSpeedX: undefined,
+  maxSpeedY: undefined,
+  minAlpha: undefined,
+  minRadius: undefined,
+  minSpeedX: undefined,
+  minSpeedY: undefined,
+  total: undefined
+};
 
+// Storage Functions
 const createStorageEntry = (key, value) => {
   if (typeof value === 'object') {
     if (Array.isArray(value)) {
@@ -112,12 +196,14 @@ const clearStorage = () => {
   ldStorage.clear();
 }
 
+// Initialisation Functions
 const checkInitialised = () => {
   const initialised = ldStorage.getItem('initialised');
   const answer = initialised === "1" ? true : false;
   return answer;
 }
 
+// Settings Functions
 const setSettings = (array) => {
   for (let i = 0; i < array.prop.length; i++) {
     const storedEntry = getStorageEntry(array.key[i]);
@@ -127,27 +213,3 @@ const setSettings = (array) => {
     }
   }
 }
-
-const load = async () => {
-  const isInitialised = checkInitialised();
-  // 1. Check if the game has ever been initialised on this device
-  if (isInitialised === false) {
-    console.log("INITIALISING")
-    // A. If it has not we need to create all the possible entries using defaults
-    await createStorageEntry('playerCharacter', gameDefaults.playerCharacter);
-    await createStorageEntry('letter', gameDefaults.letter);
-    await createStorageEntry('tracker', gameDefaults.tracker);
-    await createStorageEntry('particleProperties', gameDefaults.particleProperties);
-    await createStorageEntry('scores', gameDefaults.scores)
-    await createStorageEntry('initialised', gameDefaults.initialised)
-  } else {
-    // B. If it has been initialised then we need to load all the dat and variables for the game
-    console.log("GAME ALREADY INITIALISED")
-  }
-  await setSettings({
-    prop: [playerCharacter, letter, tracker, particleProperties],
-    key: ['playerCharacter', 'letter', 'tracker', 'particleProperties']
-  });
-}
-
-window.onload = load;
