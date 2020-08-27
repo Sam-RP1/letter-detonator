@@ -4,28 +4,19 @@ import React, { Component } from 'react';
 import {hot} from 'react-hot-loader';
 
 /**
-* HighscoreMenu - Class for the HighscoreMenu component.
+* HighscoresMenu - Class for the HighscoresMenu component.
 */
-class HighscoreMenu extends Component {
+class HighscoresMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
       buttons: [
         {
           title: "Return",
-          action: () => openHome(),
+          action: () => openMainMenu(),
         }
-      ],
-      highscores: []
+      ]
     };
-  }
-
-  componentDidMount() {
-    fetchHighscores().then(response => {
-      this.setState({
-        highscores: response
-      })
-    });
   }
 
   render () {
@@ -35,7 +26,7 @@ class HighscoreMenu extends Component {
       )
     });
 
-    let scores = this.state.highscores.map((score, i) => {
+    let scores = this.props.scores.map((score, i) => {
       return (
         <div key={i} className="leaderboard-entry">
         <p>{i+1}</p>
@@ -48,7 +39,7 @@ class HighscoreMenu extends Component {
     });
 
     return (
-      <section id="high-score-menu" className="sub-menu-container">
+      <React.Fragment>
       <h1>High Scores</h1>
       <h3 className="subheading">Letter Eliminators</h3>
       <div className="leaderboard">
@@ -62,18 +53,9 @@ class HighscoreMenu extends Component {
       {scores}
       </div>
       {buttons}
-      </section>
+      </React.Fragment>
     );
   }
 };
 
-const fetchHighscores = async () => {
-  let scoresArr = [];
-  const scoresJSON = await getStorageEntry('scores');
-  for (let i = 1; i < 11; i ++) {
-    scoresArr.push(scoresJSON[i])
-  }
-  return scoresArr;
-}
-
-export default HighscoreMenu;
+export default HighscoresMenu;

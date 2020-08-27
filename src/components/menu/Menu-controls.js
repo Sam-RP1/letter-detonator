@@ -4,15 +4,15 @@ import React, { Component } from 'react';
 import {hot} from 'react-hot-loader';
 
 /**
-* GameoverMenu - Class for the GameoverMenu component.
+* ControlsMenu - Class for the ControlsMenu component.
 */
-class GameoverMenu extends Component {
+class ControlsMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
       buttons: [
         {
-          title: "Continue",
+          title: "Return",
           action: () => openMainMenu(),
         }
       ]
@@ -27,13 +27,16 @@ class GameoverMenu extends Component {
     });
 
     return (
-      <section id="game-over-menu" className="sub-menu-container">
-      <h1>GAME OVER</h1>
-      <h3 className="subheading">Score: {score}</h3>
+      <section id="controls-menu" className="sub-menu-container">
+      <h1>Controls</h1>
+      <h3 className="subheading">You'll need these</h3>
+      <div className="menu-text">
+      <p>Controls here</p>
+      </div>
       {buttons}
       </section>
     );
   }
 };
 
-export default GameoverMenu;
+export default ControlsMenu;

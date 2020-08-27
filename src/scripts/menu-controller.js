@@ -1,41 +1,65 @@
-const modal = document.getElementById('modal-container');
+const toggleModal = () => {
+  const modal = document.getElementById('modal-container');
+  modal.classList.toggle('active');
+}
+
+const clearMenu = () => {
+  const menu = document.getElementById('menu-modal');
+  for (const child of menu.childNodes) {
+    child.style.display = 'none';
+  }
+}
 
 const startGame = () => {
   console.log("START");
-  modal.style.display = 'none';
+  toggleModal();
+  clearMenu();
   loop(letterdetonator);
 }
 
 const openHighscores = () => {
   console.log("OPEN HIGHSCORES");
   clearMenu();
-  document.getElementById('high-score-menu').style.display = 'flex';
+  document.getElementById('high-scores-menu').style.display = 'flex';
 }
 
 const openHowToPlay = () => {
   console.log("OPEN HOW TO PLAY");
+  clearMenu();
+  document.getElementById('htp-menu').style.display = 'flex';
 }
 
 const openControls = () => {
   console.log("OPEN CONTROLS");
+  clearMenu();
+  document.getElementById('controls-menu').style.display = 'flex';
 }
 
 const openSettings = () => {
   console.log("OPEN SETTINGS");
+  clearMenu();
+  document.getElementById('settings-menu').style.display = 'flex';
 }
 
-const openPauseMenu = () => {
+const openMainMenu = () => {
+  console.log("RETURN TO MAIN MENU");
   clearMenu();
-  document.getElementById('pause-menu').style.display = 'flex';
+  document.getElementById('main-menu').style.display = 'flex';
+}
+
+// Pause & in-play menus
+const openPauseMenu = () => {
   console.log("OPEN PAUSE MENU");
   window.cancelAnimationFrame(animation);
   animation = undefined;
-  modal.style.display = 'flex';
+  clearMenu();
+  document.getElementById('pause-menu').style.display = 'flex';
+  toggleModal();
 }
 
 const continueGame = () => {
   console.log("CONTINUE GAME");
-  modal.style.display = 'none';
+  toggleModal();
   animation = window.requestAnimationFrame(engineLoop);
 }
 
@@ -46,16 +70,13 @@ const restartGame = () => {
 const quitGame = () => {
   console.log("QUIT GAME");
   clearMenu();
-  const homeMenu = document.getElementById('home-menu');
+  document.getElementById('main-menu').style.display = 'flex';
   score = 0;
   letters = [];
   ctx.clearRect(0, 0, c.width, c.height);
-  homeMenu.style.display = 'flex';
 }
 
 const gameOver = () => {
-  clearMenu();
-  document.getElementById('game-over-menu').style.display = 'flex';
   console.log("GAME OVER");
   window.cancelAnimationFrame(animation);
   animation = undefined;
@@ -63,18 +84,7 @@ const gameOver = () => {
   letters = [];
   ctx.clearRect(0, 0, c.width, c.height);
   end = false;
-  modal.style.display = 'flex';
-}
-
-const openHome = () => {
-  console.log("RETURN TO HOME MENU");
   clearMenu();
-  homeMenu = document.getElementById('home-menu').style.display = 'flex';
-}
-
-const clearMenu = () => {
-  document.getElementById('home-menu').style.display = 'none';
-  document.getElementById('high-score-menu').style.display = 'none';
-  document.getElementById('pause-menu').style.display = 'none';
-  document.getElementById('game-over-menu').style.display = 'none';
+  document.getElementById('game-over-menu').style.display = 'flex';
+  toggleModal();
 }

@@ -4,15 +4,15 @@ import React, { Component } from 'react';
 import {hot} from 'react-hot-loader';
 
 /**
-* GameoverMenu - Class for the GameoverMenu component.
+* HowtoplayMenu - Class for the HowtoplayMenu component.
 */
-class GameoverMenu extends Component {
+class HowtoplayMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
       buttons: [
         {
-          title: "Continue",
+          title: "Return",
           action: () => openMainMenu(),
         }
       ]
@@ -27,13 +27,16 @@ class GameoverMenu extends Component {
     });
 
     return (
-      <section id="game-over-menu" className="sub-menu-container">
-      <h1>GAME OVER</h1>
-      <h3 className="subheading">Score: {score}</h3>
+      <section id="htp-menu" className="sub-menu-container">
+      <h1>How to play</h1>
+      <h3 className="subheading">Guide</h3>
+      <div className="menu-text">
+      <p>Welcome to Letter Detonator! A game where you click letters to watch letters explode.</p>
+      </div>
       {buttons}
       </section>
     );
   }
 };
 
-export default GameoverMenu;
+export default HowtoplayMenu;
