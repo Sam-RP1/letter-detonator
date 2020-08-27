@@ -41,11 +41,13 @@ if (!Object.keys) {
   }());
 }
 
+const ver = "build-0.9.2";
+
 // Default Game Settings & Variables
 const gameDefaults = {
   playerCharacter: {
     radius: 15,
-    color: '#808080'
+    color: '#fff'
   },
   letter: {
     font: '20px Courier',
@@ -135,7 +137,7 @@ const gameDefaults = {
       achieved: null
     }
   },
-  initialised: "1"
+  initialised: "build-0.9.2",
 };
 
 // Customisable Settings & Variables
@@ -212,7 +214,7 @@ const checkScore = async (score) => {
 const insertScore = async (place, name, score, level) => {
   const highScores = await getStorageEntry('scores');
   const date = new Date();
-  const dateAchieved = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+  const dateAchieved = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
   if (highScores[place].score === null){
     highScores[place].name = name;
@@ -241,7 +243,7 @@ const insertScore = async (place, name, score, level) => {
 // Initialisation Functions
 const checkInitialised = () => {
   const initialised = ldStorage.getItem('initialised');
-  const answer = initialised === "1" ? true : false;
+  const answer = initialised === ver ? true : false;
   return answer;
 }
 

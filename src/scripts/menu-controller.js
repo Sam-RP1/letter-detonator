@@ -81,7 +81,7 @@ const quitGame = () => {
   score = 0;
   level = 1;
   letters = [];
-  document.getElementById('root').className = levels[0].class;
+  document.getElementById('root').className = reset.class;
   letter.color = levels[0].textColor;
   letter.chance = levels[0].chance;
   ctx.clearRect(0, 0, c.width, c.height);
@@ -93,7 +93,7 @@ const gameOver = async () => {
   console.log("GAME OVER");
   window.cancelAnimationFrame(animation);
   animation = undefined;
-  document.getElementById('root').className = levels[0].class;
+  document.getElementById('root').className = reset.class;
   letter.color = levels[0].textColor;
   letter.chance = levels[0].chance;
   ctx.clearRect(0, 0, c.width, c.height);

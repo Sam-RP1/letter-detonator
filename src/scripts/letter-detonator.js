@@ -13,37 +13,37 @@ const levels = [
   {
     id: '2',
     class: 'level-two',
-    textColor: '#0000ff',
+    textColor: '#000',
     chance: 0.02
   },
   {
     id: '3',
     class: 'level-three',
-    textColor: '#7cfc00',
+    textColor: '#000',
     chance: 0.025
   },
   {
     id: '4',
     class: 'level-four',
-    textColor: '#fff',
+    textColor: '#000',
     chance: 0.03
   },
   {
     id: '5',
     class: 'level-five',
-    textColor: '#ffff00',
+    textColor: '#000',
     chance: 0.035
   },
   {
     id: '6',
     class: 'level-six',
-    textColor: '#ff0000',
+    textColor: '#fff',
     chance: 0.04
   },
   {
     id: '7',
     class: 'level-seven',
-    textColor: '#000',
+    textColor: '#fff',
     chance: 0.06
   },
   {
@@ -53,6 +53,11 @@ const levels = [
     chance: 0.1
   },
 ];
+const reset = {
+  class: 'default-bg',
+  textColor: '#000',
+  chance: 0.01
+}
 const explosionColors = [['226', '40', '34'], ['226', '56', '34'], ['226', '72', '34'], ['226', '88', '34'], ['226', '104', '34'], ['226', '120', '34']];
 const particles = [];
 let letters = [];
@@ -147,6 +152,11 @@ const levelHandler = () => {
     bg.className = levels[1].class;
     letter.color = levels[1].textColor;
     letter.chance = levels[1].chance;
+  } else if (score < 11) {
+    level = 1;
+    bg.className = levels[0].class;
+    letter.color = levels[0].textColor;
+    letter.chance = levels[0].chance;
   }
 };
 
@@ -213,7 +223,7 @@ const generateLetters = () => {
     const directionY = center.y - y;
     const mult = Math.sqrt(directionX ** 2 + directionY ** 2);
     const speed = generateRandomNum(letter.minSpeed, letter.maxSpeed);
-    const letterCode = Math.random() < 0.25 ? generateRandomInt(25) + 65 : generateRandomInt(25) + 97
+    const letterCode = Math.random() < 0.00 ? generateRandomInt(25) + 65 : generateRandomInt(25) + 97
     // UTF-16: lower case letters between 65 & 90, upper case letters between 97 & 122
     letters.push({
       x,

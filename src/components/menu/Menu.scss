@@ -12,7 +12,7 @@ a {
 }
 
 a:link, a:visited, a:hover  {
-  color: #0080b3;
+  color: #0A81B1;
   background-color: transparent;
   text-decoration: none;
 }
@@ -44,8 +44,8 @@ a:link, a:visited, a:hover  {
   min-width: 300px;
   box-sizing: border-box;
   padding: 10px;
-  border: 3px solid #0080b3;
-  border-radius: 10px;
+  border: 3px solid #1B1B26;
+  border-radius: 20px;
   background-color: #fff;
   overflow-y: auto;
   overflow-x: hidden;
@@ -61,7 +61,6 @@ a:link, a:visited, a:hover  {
     font-style: italic;
     text-transform: uppercase;
     text-align: center;
-    color: #000;
   }
 }
 
@@ -92,7 +91,7 @@ a:link, a:visited, a:hover  {
   margin-bottom: 15px;
   text-align: center;
   border-radius: 5px;
-  border: 3px solid #0080b3;
+  border: 3px solid #1B1B26;
   cursor: pointer;
   @include transition(0.2s);
 }
@@ -208,7 +207,7 @@ form {
 }
 
 .name-input {
-  color: #0080b3;
+  color: #0A81B1;
   margin: 15px 0px 30px 0px;
-  border: 2px dashed #0080b3;
+  border: 2px dashed #0A81B1;
 }
