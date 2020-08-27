@@ -65,25 +65,38 @@ const continueGame = () => {
 
 const restartGame = () => {
   console.log("RESTART GAME");
+  score = 0;
+  level = 1;
+  letters = [];
+  document.getElementById('root').className = levels[0].class;
+  letter.color = levels[0].textColor;
+  letter.chance = levels[0].chance;
+  ctx.clearRect(0, 0, c.width, c.height);
+  toggleModal();
+  loop(letterdetonator);
 }
 
 const quitGame = () => {
   console.log("QUIT GAME");
+  score = 0;
+  level = 1;
+  letters = [];
+  document.getElementById('root').className = levels[0].class;
+  letter.color = levels[0].textColor;
+  letter.chance = levels[0].chance;
+  ctx.clearRect(0, 0, c.width, c.height);
   clearMenu();
   document.getElementById('main-menu').style.display = 'flex';
-  score = 0;
-  letters = [];
-  ctx.clearRect(0, 0, c.width, c.height);
 }
 
-const gameOver = () => {
+const gameOver = async () => {
   console.log("GAME OVER");
   window.cancelAnimationFrame(animation);
   animation = undefined;
-  score = 0;
-  letters = [];
+  document.getElementById('root').className = levels[0].class;
+  letter.color = levels[0].textColor;
+  letter.chance = levels[0].chance;
   ctx.clearRect(0, 0, c.width, c.height);
-  end = false;
   clearMenu();
   document.getElementById('game-over-menu').style.display = 'flex';
   toggleModal();

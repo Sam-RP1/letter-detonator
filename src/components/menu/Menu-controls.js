@@ -31,7 +31,7 @@ class ControlsMenu extends Component {
       <h1>Controls</h1>
       <h3 className="subheading">You'll need these</h3>
       <div className="menu-text">
-      <p>Controls here</p>
+      <p>Coming soon! But for now you'll just have to wing it.</p>
       </div>
       {buttons}
       </section>

@@ -181,3 +181,34 @@ a:link, a:visited, a:hover  {
     margin: 0px;
   }
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  width: 100%;
+}
+
+form {
+  p {
+    margin: 0px;
+  }
+
+  input {
+    font-family: 'Cantarell', sans-serif;
+    font-weight: 700;
+    font-size: 1em;
+    background-color: #fff;
+  }
+
+  input[type=text]:focus {
+    border: 2px dashed #000!important;
+  }
+}
+
+.name-input {
+  color: #0080b3;
+  margin: 15px 0px 30px 0px;
+  border: 2px dashed #0080b3;
+}

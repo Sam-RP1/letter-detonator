@@ -45,7 +45,7 @@ class MainMenu extends Component {
     });
 
     return (
-      <section id="main-menu" className="sub-menu-container">
+      <section id="main-menu" className="sub-menu-container" style={{display: flex;}}>
       <h1>Letter Detonator</h1>
       <h3 className="subheading">By <a href="http://srenshawpanting.co.uk/" target="_blank">SRP</a></h3>
       {buttons}

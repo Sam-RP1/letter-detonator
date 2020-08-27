@@ -42,7 +42,8 @@ class Menu extends Component {
           action: () => openSettings(),
         }
       ],
-      highscores: []
+      highscores: [],
+      textTest: "hello"
     };
 
     this.setHighscores = this.setHighscores.bind(this);
@@ -79,9 +80,7 @@ class Menu extends Component {
       <h3 className="subheading">By <a href="http://srenshawpanting.co.uk/" target="_blank">SRP</a></h3>
       {buttons}
       </section>
-      <section id="high-scores-menu" className="sub-menu-container">
       <HighscoreMenu scores={this.state.highscores} />
-      </section>
       <HowtoplayMenu />
       <ControlsMenu />
       <SettingsMenu />

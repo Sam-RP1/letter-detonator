@@ -7,33 +7,57 @@ const levels = [
   {
     id: '1',
     class: 'level-one',
-    textColor: '#',
+    textColor: '#000',
+    chance: 0.01
   },
   {
     id: '2',
     class: 'level-two',
-    textColor: '#',
+    textColor: '#0000ff',
+    chance: 0.02
   },
   {
     id: '3',
     class: 'level-three',
-    textColor: '#',
+    textColor: '#7cfc00',
+    chance: 0.025
   },
   {
     id: '4',
     class: 'level-four',
-    textColor: '#',
+    textColor: '#fff',
+    chance: 0.03
   },
   {
     id: '5',
     class: 'level-five',
-    textColor: '#',
-  }
+    textColor: '#ffff00',
+    chance: 0.035
+  },
+  {
+    id: '6',
+    class: 'level-six',
+    textColor: '#ff0000',
+    chance: 0.04
+  },
+  {
+    id: '7',
+    class: 'level-seven',
+    textColor: '#000',
+    chance: 0.06
+  },
+  {
+    id: '8',
+    class: 'level-eight',
+    textColor: '#fff',
+    chance: 0.1
+  },
 ];
 const explosionColors = [['226', '40', '34'], ['226', '56', '34'], ['226', '72', '34'], ['226', '88', '34'], ['226', '104', '34'], ['226', '120', '34']];
 const particles = [];
 let letters = [];
 let score = 0;
+let level = 1;
 let end = false;
 let page = document.getElementById('root');
 
@@ -87,26 +111,42 @@ const paintCircle = (x, y, radius, color) => {
 * Handles the changing of levels by setting numerous variables that alter the gameplay.
 */
 const levelHandler = () => {
-  if (score > 10) {
-    page.classList.add(levels[0].class);
-  } else if (score > 30) {
-    page.classList.add(levels[1].class);
-    page.classList.remove(levels[0].class);
+  const bg = document.getElementById('root');
+  if (score > 70) {
+    level = 8;
+    bg.className = levels[7].class;
+    letter.color = levels[7].textColor;
+    letter.chance = levels[7].chance;
+  } else if (score > 60) {
+    level = 7;
+    bg.className = levels[6].class;
+    letter.color = levels[6].textColor;
+    letter.chance = levels[6].chance;
   } else if (score > 50) {
-    page.classList.add(levels[2].class);
-    page.classList.remove(levels[1].class);
-    page.classList.remove(levels[0].class);
-  } else if (score > 70) {
-    page.classList.add(levels[3].class);
-    page.classList.remove(levels[2].class);
-    page.classList.remove(levels[1].class);
-    page.classList.remove(levels[0].class);
-  } else if (score > 100) {
-    page.classList.add(levels[4].class);
-    page.classList.remove(levels[3].class);
-    page.classList.remove(levels[2].class);
-    page.classList.remove(levels[1].class);
-    page.classList.remove(levels[0].class);
+    level = 6;
+    bg.className = levels[5].class;
+    letter.color = levels[5].textColor;
+    letter.chance = levels[5].chance;
+  } else if (score > 40) {
+    level = 5;
+    bg.className = levels[4].class;
+    letter.color = levels[4].textColor;
+    letter.chance = levels[4].chance;
+  } else if (score > 30) {
+    level = 4;
+    bg.className = levels[3].class;
+    letter.color = levels[3].textColor;
+    letter.chance = levels[3].chance;
+  } else if (score > 20) {
+    level = 3;
+    bg.className = levels[2].class;
+    letter.color = levels[2].textColor;
+    letter.chance = levels[2].chance;
+  } else if (score > 10) {
+    level = 2;
+    bg.className = levels[1].class;
+    letter.color = levels[1].textColor;
+    letter.chance = levels[1].chance;
   }
 };
 
@@ -173,8 +213,8 @@ const generateLetters = () => {
     const directionY = center.y - y;
     const mult = Math.sqrt(directionX ** 2 + directionY ** 2);
     const speed = generateRandomNum(letter.minSpeed, letter.maxSpeed);
-    const letterCode = Math.random() < 0.5 ? generateRandomInt(25) + 65 : generateRandomInt(25) + 97
-    // UTF-16: upper case letters between 65 & 90, lower case letters between 97 & 122
+    const letterCode = Math.random() < 0.25 ? generateRandomInt(25) + 65 : generateRandomInt(25) + 97
+    // UTF-16: lower case letters between 65 & 90, upper case letters between 97 & 122
     letters.push({
       x,
       y,
@@ -204,16 +244,14 @@ const removeLetter = (i, letter) => {
 * Else game continues.
 */
 const destroyLetters = (frames) => {
-  let i = 0;
   for (const item of letters) {
     if (isIntersectingPlayer(item, letter.size, center, playerCharacter.radius)) {
-      i++;
+      end = true;
     } else {
       item.x += item.speedX * frames;
       item.y += item.speedY * frames;
     }
   }
-  end = i > 0 ? true : false;
 };
 
 //------------- KEY HANDLERS -------------//
@@ -239,9 +277,14 @@ const keyDownHandler = (e) => {
 };
 
 const keyUpHandler = (e) => {
+  const modal = document.getElementById('modal-container');
+  const pauseMenu = document.getElementById('pause-menu');
   if (e.keyCode === 27) {
-    if (animation === undefined) {
+    if (animation === undefined && pauseMenu.style.display === 'flex') {
+      console.log("UNPAUSING GAME")
       continueGame();
+    } else if (modal.classList.contains('active')) {
+      console.log("MENU OPEN: escape disabled")
     } else {
       openPauseMenu();
     }
@@ -258,10 +301,11 @@ const letterdetonator = function (frames) {
   for (const item of letters) {
     ctx.fillText(String.fromCharCode(item.code), item.x, item.y);
   }
-  // Score Tracker
+  // Trackers
   ctx.font = tracker.font;
-  ctx.fillStyle = tracker.color;
+  ctx.fillStyle = letter.color;
   ctx.fillText('Score: ' + score, tracker.x, tracker.y);
+  ctx.fillText('Level: ' + level, tracker.x + 200, tracker.y);
   //
   paintExplosion();
   handleExplosion(frames);

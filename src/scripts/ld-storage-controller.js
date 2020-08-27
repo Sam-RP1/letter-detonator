@@ -45,11 +45,11 @@ if (!Object.keys) {
 const gameDefaults = {
   playerCharacter: {
     radius: 15,
-    color: '#000'
+    color: '#808080'
   },
   letter: {
     font: '20px Courier',
-    color: '#0080b3',
+    color: '#000',
     size: 30,
     chance: 0.01,
     maxSpeed: 1.5,
@@ -75,10 +75,10 @@ const gameDefaults = {
   },
   scores: {
     1: {
-      name: "Test User",
-      level: 0,
-      score: 0,
-      achieved: "25/08/2020"
+      name: null,
+      level: null,
+      score: null,
+      achieved: null
     },
     2: {
       name: null,
@@ -194,6 +194,48 @@ const getStorageEntry = (key) => {
 
 const clearStorage = () => {
   ldStorage.clear();
+}
+
+// Score Functions
+const checkScore = async (score) => {
+  const highScores = await getStorageEntry('scores');
+  for (let i = 1; i < 11; i++) {
+    if (highScores[i].score === null){
+      return [true, i];
+    } else if (score > highScores[i].score) {
+      return [true, i];
+    }
+  }
+  return [false, 0];
+}
+
+const insertScore = async (place, name, score, level) => {
+  const highScores = await getStorageEntry('scores');
+  const date = new Date();
+  const dateAchieved = date.getDate() + "/" + date.getMonth() + "/" + date.getFullYear();
+
+  if (highScores[place].score === null){
+    highScores[place].name = name;
+    highScores[place].score = score;
+    highScores[place].level = level;
+    highScores[place].achieved = dateAchieved;
+  } else if (highScores[place].score !== null) {
+    for (let i = 10; i >= place; i--) {
+      if (i === place) {
+        highScores[place].name = name;
+        highScores[place].score = score;
+        highScores[place].level = level;
+        highScores[place].achieved = dateAchieved;
+      } else {
+        highScores[i].name = highScores[i-1].name;
+        highScores[i].score = highScores[i-1].score;
+        highScores[i].level = highScores[i-1].level;
+        highScores[i].achieved = highScores[i-1].achieved;
+      }
+    }
+  }
+
+  await createStorageEntry('scores', highScores)
 }
 
 // Initialisation Functions

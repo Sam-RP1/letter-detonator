@@ -39,7 +39,7 @@ class HighscoresMenu extends Component {
     });
 
     return (
-      <React.Fragment>
+      <section id="high-scores-menu" className="sub-menu-container">
       <h1>High Scores</h1>
       <h3 className="subheading">Letter Eliminators</h3>
       <div className="leaderboard">
@@ -53,7 +53,7 @@ class HighscoresMenu extends Component {
       {scores}
       </div>
       {buttons}
-      </React.Fragment>
+      </section>
     );
   }
 };
