@@ -8,6 +8,26 @@ body {
   @include transition(0.5s);
 }
 
+h1, h2, h3, p {
+  font-family: 'Cantarell', sans-serif;
+  font-weight: 700;
+}
+
+p {
+  margin: 0px;
+}
+
+a {
+  text-decoration: none;
+  content: inherit;
+}
+
+a:link, a:visited, a:hover  {
+  color: #0A81B1;
+  background-color: transparent;
+  text-decoration: none;
+}
+
 #canvas {
   position: fixed;
   z-index: 8;
@@ -56,4 +76,12 @@ body {
 
 .level-eight {
   background-color: #0A81B1;
+}
+
+.level-nine {
+  background-color: #08668c;
+}
+
+.level-ten {
+  background-color: #064b67;
 }

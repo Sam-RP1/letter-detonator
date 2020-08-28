@@ -11,8 +11,6 @@ const load = async () => {
     // A. If it has not we need to create all the possible entries using defaults
     await createStorageEntry('playerCharacter', gameDefaults.playerCharacter);
     await createStorageEntry('letter', gameDefaults.letter);
-    await createStorageEntry('tracker', gameDefaults.tracker);
-    await createStorageEntry('particleProperties', gameDefaults.particleProperties);
     await createStorageEntry('scores', gameDefaults.scores)
     await createStorageEntry('initialised', gameDefaults.initialised)
   } else {
@@ -20,8 +18,8 @@ const load = async () => {
     console.log("GAME ALREADY INITIALISED")
   }
   await setSettings({
-    prop: [playerCharacter, letter, tracker, particleProperties],
-    key: ['playerCharacter', 'letter', 'tracker', 'particleProperties']
+    prop: [playerCharacter, letter],
+    key: ['playerCharacter', 'letter']
   });
   ReactDOM.render(<Menu />, document.getElementById('modal-container'));
 }

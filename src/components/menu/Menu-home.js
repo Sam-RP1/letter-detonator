@@ -45,7 +45,7 @@ class HomeMenu extends Component {
     return (
       <section id="home-menu" className="sub-menu-container">
       <h1>Letter Detonator</h1>
-      <h3 className="subheading">By <a href="http://srenshawpanting.co.uk/" target="_blank">SRP</a></h3>
+      <h3>By <a href="http://srenshawpanting.co.uk/" target="_blank">SRP</a></h3>
       {buttons}
       </section>
     );

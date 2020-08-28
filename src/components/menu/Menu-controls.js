@@ -29,7 +29,7 @@ class ControlsMenu extends Component {
     return (
       <section id="controls-menu" className="sub-menu-container">
       <h1>Controls</h1>
-      <h3 className="subheading">You'll need these</h3>
+      <h3>You'll need these</h3>
       <div className="menu-text">
       <p>Coming soon! But for now you'll just have to wing it.</p>
       </div>

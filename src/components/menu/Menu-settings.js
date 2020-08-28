@@ -29,7 +29,7 @@ class SettingsMenu extends Component {
     return (
       <section id="settings-menu" className="sub-menu-container">
       <h1>Settings</h1>
-      <h3 className="subheading">Fiddly bits</h3>
+      <h3>Fiddly bits</h3>
       <div className="menu-text">
       <p>You'll get these eventually...</p>
       <p>...but just not today.</p>

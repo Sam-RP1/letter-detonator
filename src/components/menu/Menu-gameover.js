@@ -87,14 +87,14 @@ class GameoverMenu extends Component {
     if (this.state.takeInput === false) {
       content = (
         <React.Fragment>
-        <h3 className="subheading">{this.state.textLines[Math.floor(Math.random() * this.state.textLines.length)]}</h3>
+        <h3>{this.state.textLines[Math.floor(Math.random() * this.state.textLines.length)]}</h3>
         <div className="menu-button" onClick={this.state.buttons[0].action}><p>{this.state.buttons[0].title}</p></div>
         </React.Fragment>
       )
     } else {
       content = (
         <React.Fragment>
-        <h3 className="subheading">New High Score</h3>
+        <h3>New High Score</h3>
         <form onSubmit={this.submitHandler}>
         <p>Enter Your Nickname:</p>
         <input className="name-input" name="userName" type="text" onChange={this.changeHandler} placeholder="Enter Nickname Here" minLength="3" maxLength="10" required />

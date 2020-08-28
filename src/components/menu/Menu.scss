@@ -1,22 +1,6 @@
 @import '../../styles/mixins/transition';
 @import '../../styles/mixins/transform';
 
-h1, h2, h3, p {
-  font-family: 'Cantarell', sans-serif;
-  font-weight: 700;
-}
-
-a {
-  text-decoration: underline;
-  content: inherit;
-}
-
-a:link, a:visited, a:hover  {
-  color: #0A81B1;
-  background-color: transparent;
-  text-decoration: none;
-}
-
 .modal-container {
   position: fixed;
   z-index: 10;
@@ -34,9 +18,7 @@ a:link, a:visited, a:hover  {
 }
 
 #menu-modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   height: auto;
   width: 500px;
   max-height: 100%;
@@ -55,17 +37,26 @@ a:link, a:visited, a:hover  {
   h1 {
     height: auto;
     width: auto;
-    margin: 15px 0px 5px 0px;
+    margin: 15px 0px;
     font-size: 2em;
     font-weight: 700;
     font-style: italic;
     text-transform: uppercase;
     text-align: center;
   }
-}
 
-.subheading {
-  margin: 0px 0px 30px 0px;
+  h1::after {
+    content: "";
+    display: block;
+    width: 100%;
+    border-bottom: 3px solid #1B1B26;
+    position: relative;
+    top: 3px;
+  }
+
+  h3 {
+    margin: 0px 0px 15px 0px;
+  }
 }
 
 #main-menu {
@@ -100,12 +91,6 @@ a:link, a:visited, a:hover  {
   @include transform(scale(0.97));
 }
 
-.menu-button {
-  p {
-    margin: 0px;
-  }
-}
-
 .leaderboard {
   display: flex;
   flex-direction: column;
@@ -116,12 +101,6 @@ a:link, a:visited, a:hover  {
   padding: 0px 10px;
   margin-bottom: 30px;
   overflow: auto;
-}
-
-.leaderboard {
-  p {
-    margin: 0px;
-  }
 }
 
 .leaderboard-titles {
@@ -175,12 +154,6 @@ a:link, a:visited, a:hover  {
   overflow-y: auto;
 }
 
-.menu-text {
-  p {
-    margin: 0px;
-  }
-}
-
 form {
   display: flex;
   flex-direction: column;
@@ -190,10 +163,6 @@ form {
 }
 
 form {
-  p {
-    margin: 0px;
-  }
-
   input {
     font-family: 'Cantarell', sans-serif;
     font-weight: 700;

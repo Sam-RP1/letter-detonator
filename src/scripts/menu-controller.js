@@ -68,9 +68,6 @@ const restartGame = () => {
   score = 0;
   level = 1;
   letters = [];
-  document.getElementById('root').className = levels[0].class;
-  letter.color = levels[0].textColor;
-  letter.chance = levels[0].chance;
   ctx.clearRect(0, 0, c.width, c.height);
   toggleModal();
   loop(letterdetonator);
@@ -82,8 +79,6 @@ const quitGame = () => {
   level = 1;
   letters = [];
   document.getElementById('root').className = reset.class;
-  letter.color = levels[0].textColor;
-  letter.chance = levels[0].chance;
   ctx.clearRect(0, 0, c.width, c.height);
   clearMenu();
   document.getElementById('main-menu').style.display = 'flex';
@@ -94,8 +89,6 @@ const gameOver = async () => {
   window.cancelAnimationFrame(animation);
   animation = undefined;
   document.getElementById('root').className = reset.class;
-  letter.color = levels[0].textColor;
-  letter.chance = levels[0].chance;
   ctx.clearRect(0, 0, c.width, c.height);
   clearMenu();
   document.getElementById('game-over-menu').style.display = 'flex';

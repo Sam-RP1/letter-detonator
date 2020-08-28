@@ -18,7 +18,7 @@ const loop = engineLogic => {
   let frameTime = current - previous;
   previous = current;
   let frames = 0;
-  // Keeps animation consistent by tying it to 60FPS speed essentially
+  // Keeps animation consistent
   if (frameTime < FRAME_TIME_MAX) {
     accumulator += frameTime;
     while (accumulator >= FRAME_TIME) { // If accumulation becomes < FRAME_TIME then break
@@ -26,8 +26,8 @@ const loop = engineLogic => {
       accumulator -= FRAME_TIME;
     }
   }
-  meter.tick();
   ctx.clearRect(0, 0, c.width, c.height);
+  meter.tick();
   if (end !== true) {
     engineLogic(frames);
     if (engineLoop === undefined) {

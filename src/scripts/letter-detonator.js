@@ -3,64 +3,33 @@ const center = {
   x: c.width / 2,
   y: c.height / 2
 };
-const levels = [
-  {
-    id: '1',
-    class: 'level-one',
-    textColor: '#000',
-    chance: 0.01
-  },
-  {
-    id: '2',
-    class: 'level-two',
-    textColor: '#000',
-    chance: 0.02
-  },
-  {
-    id: '3',
-    class: 'level-three',
-    textColor: '#000',
-    chance: 0.025
-  },
-  {
-    id: '4',
-    class: 'level-four',
-    textColor: '#000',
-    chance: 0.03
-  },
-  {
-    id: '5',
-    class: 'level-five',
-    textColor: '#000',
-    chance: 0.035
-  },
-  {
-    id: '6',
-    class: 'level-six',
-    textColor: '#fff',
-    chance: 0.04
-  },
-  {
-    id: '7',
-    class: 'level-seven',
-    textColor: '#fff',
-    chance: 0.06
-  },
-  {
-    id: '8',
-    class: 'level-eight',
-    textColor: '#fff',
-    chance: 0.1
-  },
-];
 const reset = {
   class: 'default-bg',
   textColor: '#000',
   chance: 0.01
 }
-const explosionColors = [['226', '40', '34'], ['226', '56', '34'], ['226', '72', '34'], ['226', '88', '34'], ['226', '104', '34'], ['226', '120', '34']];
+const tracker = {
+  font: '24px Arial',
+  color: '#0080b3',
+  x: 15,
+  y: 30
+}
+const particleProperties = {
+  shrink: 0.1,
+  maxAlpha: 0.8,
+  maxRadius: 5,
+  maxSpeedX: 2,
+  maxSpeedY: 2,
+  minAlpha: 0.3,
+  minRadius: 1,
+  minSpeedX: -2,
+  minSpeedY: -2,
+  total: 100
+}
+const explosionColors = [['226', '40', '34'], ['226', '56', '34'], ['226', '72', '34'], ['226', '88', '34'], ['226', '104', '34'], ['226', '120', '34'], ['255', '255', '130']];
 const particles = [];
 let letters = [];
+let maxLetterCount = 15;
 let score = 0;
 let level = 1;
 let end = false;
@@ -114,49 +83,60 @@ const paintCircle = (x, y, radius, color) => {
 /**
 * levelHandler() -
 * Handles the changing of levels by setting numerous variables that alter the gameplay.
+* Make more efficient?
 */
 const levelHandler = () => {
   const bg = document.getElementById('root');
-  if (score > 70) {
+  console.log("LEVEL: " + level)
+  if (score > 200) {
+    level = 10;
+    maxLetterCount = 80;
+    bg.className = 'level-ten';
+  } else if (score > 175) {
+    level = 9;
+    maxLetterCount = 70;
+    bg.className = 'level-nine';
+  } else if (score > 150) {
     level = 8;
-    bg.className = levels[7].class;
-    letter.color = levels[7].textColor;
-    letter.chance = levels[7].chance;
-  } else if (score > 60) {
+    maxLetterCount = 60;
+    bg.className = 'level-eight';
+  } else if (score > 125) {
     level = 7;
-    bg.className = levels[6].class;
-    letter.color = levels[6].textColor;
-    letter.chance = levels[6].chance;
-  } else if (score > 50) {
+    letter.chance = 0.05;
+    maxLetterCount = 50;
+    bg.className = 'level-seven';
+  } else if (score > 100) {
     level = 6;
-    bg.className = levels[5].class;
-    letter.color = levels[5].textColor;
-    letter.chance = levels[5].chance;
-  } else if (score > 40) {
+    letter.color = '#fff';
+    letter.chance = 0.04;
+    maxLetterCount = 45;
+    bg.className = 'level-six';
+  } else if (score > 75) {
     level = 5;
-    bg.className = levels[4].class;
-    letter.color = levels[4].textColor;
-    letter.chance = levels[4].chance;
-  } else if (score > 30) {
+    letter.chance = 0.03;
+    maxLetterCount = 40;
+    bg.className = 'level-five';
+  } else if (score > 50) {
     level = 4;
-    bg.className = levels[3].class;
-    letter.color = levels[3].textColor;
-    letter.chance = levels[3].chance;
-  } else if (score > 20) {
+    letter.chance = 0.025;
+    maxLetterCount = 35;
+    bg.className = 'level-four';
+  } else if (score > 30) {
     level = 3;
-    bg.className = levels[2].class;
-    letter.color = levels[2].textColor;
-    letter.chance = levels[2].chance;
-  } else if (score > 10) {
+    letter.chance = 0.02;
+    maxLetterCount = 30;
+    bg.className = 'level-three';
+  } else if (score > 15) {
     level = 2;
-    bg.className = levels[1].class;
-    letter.color = levels[1].textColor;
-    letter.chance = levels[1].chance;
-  } else if (score < 11) {
+    letter.chance = 0.015;
+    maxLetterCount = 25;
+    bg.className = 'level-two';
+  } else if (score <= 15) {
     level = 1;
-    bg.className = levels[0].class;
-    letter.color = levels[0].textColor;
-    letter.chance = levels[0].chance;
+    letter.chance = 0.01;
+    maxLetterCount = 20;
+    bg.className = 'level-one';
+    letter.color = '#000';
   }
 };
 
@@ -216,22 +196,27 @@ const handleExplosion = frames => {
 * Creates a letters properties which are then pushed in to the letters array.
 */
 const generateLetters = () => {
-  if (Math.random() < letter.chance) {
-    const x = Math.random() < 0.5 ? 0 : c.width; // enter via left edge or right edge
-    const y = Math.random() * c.height; // entry height on edge
-    const directionX = center.x - x;
-    const directionY = center.y - y;
-    const mult = Math.sqrt(directionX ** 2 + directionY ** 2);
-    const speed = generateRandomNum(letter.minSpeed, letter.maxSpeed);
-    const letterCode = Math.random() < 0.00 ? generateRandomInt(25) + 65 : generateRandomInt(25) + 97
-    // UTF-16: lower case letters between 65 & 90, upper case letters between 97 & 122
-    letters.push({
-      x,
-      y,
-      code: letterCode,
-      speedX: directionX / mult * speed,
-      speedY: directionY / mult * speed
-    });
+  console.log("MAX LETTERS: " + maxLetterCount)
+  console.log("CHANCE LETTERS: " + letter.chance)
+  console.log("NUM LETTERS: " + letters.length)
+  if (letters.length < maxLetterCount) {
+    if (Math.random() < letter.chance) {
+      const x = Math.random() < 0.5 ? 0 : c.width; // enter via left edge or right edge
+      const y = Math.random() * c.height; // entry height on edge
+      const directionX = center.x - x;
+      const directionY = center.y - y;
+      const mult = Math.sqrt(directionX ** 2 + directionY ** 2);
+      const speed = generateRandomNum(letter.minSpeed, letter.maxSpeed);
+      const letterCode = Math.random() < 0.00 ? generateRandomInt(25) + 65 : generateRandomInt(25) + 97
+      // UTF-16: lower case letters between 65 & 90, upper case letters between 97 & 122
+      letters.push({
+        x,
+        y,
+        code: letterCode,
+        speedX: directionX / mult * speed,
+        speedY: directionY / mult * speed
+      });
+    }
   }
 };
 

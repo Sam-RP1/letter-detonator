@@ -29,7 +29,7 @@ class HowtoplayMenu extends Component {
     return (
       <section id="htp-menu" className="sub-menu-container">
       <h1>How to play</h1>
-      <h3 className="subheading">Guide</h3>
+      <h3>Guide</h3>
       <div className="menu-text">
       <p>Welcome to Letter Detonator! A game where you click letters to watch letters explode.</p>
       </div>

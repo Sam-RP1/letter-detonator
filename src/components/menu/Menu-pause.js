@@ -37,7 +37,6 @@ class PauseMenu extends Component {
     return (
       <section id="pause-menu" className="sub-menu-container">
       <h1>Paused</h1>
-      <h3 className="subheading">Current Score: {score}</h3>
       {buttons}
       </section>
     );

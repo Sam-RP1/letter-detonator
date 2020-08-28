@@ -41,7 +41,7 @@ if (!Object.keys) {
   }());
 }
 
-const ver = "build-0.9.2";
+const ver = "build-0.9.4";
 
 // Default Game Settings & Variables
 const gameDefaults = {
@@ -55,25 +55,7 @@ const gameDefaults = {
     size: 30,
     chance: 0.01,
     maxSpeed: 1.5,
-    minSpeed: 0.5
-  },
-  tracker: {
-    font: '24px Arial',
-    color: '#0080b3',
-    x: 15,
-    y: 30
-  },
-  particleProperties: {
-    shrink: 0.15,
-    maxAlpha: 0.8,
-    maxRadius: 5,
-    maxSpeedX: 3,
-    maxSpeedY: 3,
-    minAlpha: 0.3,
-    minRadius: 1,
-    minSpeedX: -3,
-    minSpeedY: -3,
-    total: 100
+    minSpeed: 0.3
   },
   scores: {
     1: {
@@ -137,10 +119,10 @@ const gameDefaults = {
       achieved: null
     }
   },
-  initialised: "build-0.9.2",
+  initialised: "build-0.9.4",
 };
 
-// Customisable Settings & Variables
+// Settings & Variables
 const playerCharacter = {
   radius: undefined,
   color: undefined
@@ -152,24 +134,6 @@ const letter = {
   chance: undefined,
   maxSpeed: undefined,
   minSpeed: undefined
-};
-const tracker = {
-  font: undefined,
-  color: undefined,
-  x: undefined,
-  y: undefined
-};
-const particleProperties = {
-  shrink: undefined,
-  maxAlpha: undefined,
-  maxRadius: undefined,
-  maxSpeedX: undefined,
-  maxSpeedY: undefined,
-  minAlpha: undefined,
-  minRadius: undefined,
-  minSpeedX: undefined,
-  minSpeedY: undefined,
-  total: undefined
 };
 
 // Storage Functions
