@@ -35,7 +35,7 @@ class PauseMenu extends Component {
     });
 
     return (
-      <section id="pause-menu" className="sub-menu-container">
+      <section id="pause-menu">
       <h1>Paused</h1>
       {buttons}
       </section>

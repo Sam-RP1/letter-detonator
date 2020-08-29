@@ -39,7 +39,7 @@ class HighscoresMenu extends Component {
     });
 
     return (
-      <section id="high-scores-menu" className="sub-menu-container">
+      <section id="high-scores-menu">
       <h1>High Scores</h1>
       <h3>Letter Eliminators</h3>
       <div className="leaderboard">

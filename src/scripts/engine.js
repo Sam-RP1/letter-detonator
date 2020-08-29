@@ -3,7 +3,7 @@ const c = document.getElementById('canvas'); // Get canvas & canvas context
 const ctx = c.getContext('2d');
 c.height = window.innerHeight; // Set canvas height & width
 c.width = window.innerWidth;
-const meter = new FPSMeter(document.getElementById('fps-meter-container'), { graph: 1 }); // Set up FPS Meter
+const meter = new FPSMeter({ graph: 1, top: 'auto', bottom: '5px' }); // Set up FPS Meter
 const FRAME_TIME_MAX = 250; // Frame time variables
 const FRAME_TIME = 1000 / 58;
 const getCurrentTime = typeof performance === 'function' ? performance.now : Date.now;  // Engine variables

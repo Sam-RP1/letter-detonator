@@ -47,6 +47,7 @@ class Menu extends Component {
     };
 
     this.setHighscores = this.setHighscores.bind(this);
+    this.checkDisplaySize = this.checkDisplaySize.bind(this);
   }
 
   componentDidMount() {
@@ -66,6 +67,10 @@ class Menu extends Component {
     openHighscores();
   }
 
+  checkDisplaySize() {
+
+  }
+
   render () {
     let buttons = this.state.buttons.map((button, i) => {
       return (
@@ -75,9 +80,10 @@ class Menu extends Component {
 
     return (
       <div id="menu-modal">
-      <section id="main-menu" className="sub-menu-container">
+      <section id="main-menu">
       <h1>Letter Detonator</h1>
       <h3>By <a href="http://srenshawpanting.co.uk/" target="_blank">SRP</a></h3>
+      <h3 className="warning">This game requires a keyboard to be played!</h3>
       {buttons}
       </section>
       <HighscoreMenu scores={this.state.highscores} />

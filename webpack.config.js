@@ -36,6 +36,14 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.(png|jpe?g|svg|gif)$/i,
+        loader: 'file-loader',
+        options: {
+          outputPath: './assets/images',
+          esModule: false,
+        },
+      }
     ]
   },
   resolve: { extensions: ["*", ".js", ".jsx"] },
@@ -63,6 +71,9 @@ module.exports = {
         { from: 'src/scripts/letter-detonator.js', to: 'scripts' },
         { from: 'src/scripts/menu-controller.js', to: 'scripts' },
         { from: 'src/scripts/ld-storage-controller.js', to: 'scripts' },
+        { from: 'src/assets/characters/Dude_Monster.png', to: 'assets/characters' },
+        { from: 'src/assets/characters/Owlet_Monster.png', to: 'assets/characters' },
+        { from: 'src/assets/characters/Pink_Monster.png', to: 'assets/characters' },
       ],
     }),
   ],

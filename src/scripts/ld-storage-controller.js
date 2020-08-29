@@ -41,21 +41,15 @@ if (!Object.keys) {
   }());
 }
 
-const ver = "build-0.9.4";
+const ver = "build-0.9.5";
 
 // Default Game Settings & Variables
 const gameDefaults = {
   playerCharacter: {
-    radius: 15,
-    color: '#fff'
+    id: 1,
   },
   letter: {
     font: '20px Courier',
-    color: '#000',
-    size: 30,
-    chance: 0.01,
-    maxSpeed: 1.5,
-    minSpeed: 0.3
   },
   scores: {
     1: {
@@ -119,21 +113,21 @@ const gameDefaults = {
       achieved: null
     }
   },
-  initialised: "build-0.9.4",
+  initialised: "build-0.9.5",
 };
 
 // Settings & Variables
 const playerCharacter = {
-  radius: undefined,
-  color: undefined
+  id: undefined,
+  radius: 18
 };
 const letter = {
   font: undefined,
-  color: undefined,
-  size: undefined,
-  chance: undefined,
-  maxSpeed: undefined,
-  minSpeed: undefined
+  color: '#000',
+  size: 30,
+  chance: 0.01,
+  maxSpeed: 1.5,
+  minSpeed: 0.3
 };
 
 // Storage Functions

@@ -105,7 +105,7 @@ class GameoverMenu extends Component {
     }
 
     return (
-      <section id="game-over-menu" className="sub-menu-container">
+      <section id="game-over-menu">
       <h1>GAME OVER</h1>
       {content}
       </section>

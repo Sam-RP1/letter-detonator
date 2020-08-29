@@ -34,6 +34,7 @@ let score = 0;
 let level = 1;
 let end = false;
 let page = document.getElementById('root');
+let characters = [document.getElementById("Dude_Monster"), document.getElementById("Owlet_Monster"), document.getElementById("Pink_Monster")];
 
 /**
 * generateRandomNum(min, max) -
@@ -87,17 +88,19 @@ const paintCircle = (x, y, radius, color) => {
 */
 const levelHandler = () => {
   const bg = document.getElementById('root');
-  console.log("LEVEL: " + level)
   if (score > 200) {
     level = 10;
+    letter.chance = 0.1;
     maxLetterCount = 80;
     bg.className = 'level-ten';
   } else if (score > 175) {
     level = 9;
+    letter.chance = 0.06;
     maxLetterCount = 70;
     bg.className = 'level-nine';
   } else if (score > 150) {
     level = 8;
+    letter.chance = 0.055;
     maxLetterCount = 60;
     bg.className = 'level-eight';
   } else if (score > 125) {
@@ -196,9 +199,6 @@ const handleExplosion = frames => {
 * Creates a letters properties which are then pushed in to the letters array.
 */
 const generateLetters = () => {
-  console.log("MAX LETTERS: " + maxLetterCount)
-  console.log("CHANCE LETTERS: " + letter.chance)
-  console.log("NUM LETTERS: " + letters.length)
   if (letters.length < maxLetterCount) {
     if (Math.random() < letter.chance) {
       const x = Math.random() < 0.5 ? 0 : c.width; // enter via left edge or right edge
@@ -289,7 +289,7 @@ const keyUpHandler = (e) => {
 //------------- LOOP -------------//
 const letterdetonator = function (frames) {
   // Player character
-  paintCircle(center.x, center.y, playerCharacter.radius, playerCharacter.color);
+  ctx.drawImage(characters[playerCharacter.id], (c.width - 36) / 2, (c.height - 36) / 2, 36, 36)
   // Paint Letters
   ctx.font = letter.font;
   ctx.fillStyle = letter.color;
@@ -299,8 +299,8 @@ const letterdetonator = function (frames) {
   // Trackers
   ctx.font = tracker.font;
   ctx.fillStyle = letter.color;
-  ctx.fillText('Score: ' + score, tracker.x, tracker.y);
-  ctx.fillText('Level: ' + level, tracker.x + 200, tracker.y);
+  ctx.fillText('Level: ' + level, tracker.x, tracker.y);
+  ctx.fillText('Score: ' + score, tracker.x + 150, tracker.y);
   //
   paintExplosion();
   handleExplosion(frames);

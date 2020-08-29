@@ -21,7 +21,7 @@
   display: block;
   height: auto;
   width: 500px;
-  max-height: 100%;
+  max-height: 80vh;
   max-width: 100%;
   min-width: 300px;
   box-sizing: border-box;
@@ -29,8 +29,7 @@
   border: 3px solid #1B1B26;
   border-radius: 20px;
   background-color: #fff;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 #menu-modal {
@@ -59,6 +58,11 @@
   }
 }
 
+.warning {
+  display: none;
+  margin: 15px 0px 30px 0px!important;
+}
+
 #main-menu {
   display: flex;
 }
@@ -67,10 +71,10 @@
   display: none;
 }
 
-.sub-menu-container {
+#main-menu, #pause-menu, #game-over-menu, #high-scores-menu, #htp-menu, #controls-menu, #settings-menu {
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   height: 100%;
   width: 100%;
 }
@@ -145,13 +149,30 @@
   }
 }
 
-.menu-text {
-  height: auto;
+.menu-content {
+  max-height: 500px;
   width: 100%;
   margin-bottom: 30px;
   box-sizing: border-box;
   padding: 0px 10px;
   overflow-y: auto;
+}
+
+.menu-content {
+  p {
+    margin-bottom: 10px;
+  }
+
+  img {
+    display: block;
+    height: 70px;
+    width: auto;
+    margin: 10px auto;
+  }
+}
+
+.center {
+  text-align: center;
 }
 
 form {
@@ -179,4 +200,11 @@ form {
   color: #0A81B1;
   margin: 15px 0px 30px 0px;
   border: 2px dashed #0A81B1;
+}
+
+@media (max-width: 576px) {
+  .warning {
+    display: flex;
+    margin: 30px 0px 30px 0px;
+  }
 }
