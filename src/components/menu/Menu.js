@@ -39,24 +39,19 @@ class Menu extends Component {
         },
         {
           title: "Settings",
-          action: () => openSettings(),
+          action: () => this.setSettings(),
         }
       ],
       highscores: [],
-      textTest: "hello"
+      settings: {}
     };
 
     this.setHighscores = this.setHighscores.bind(this);
+    this.setSettings = this.setSettings.bind(this);
     this.checkDisplaySize = this.checkDisplaySize.bind(this);
   }
 
-  componentDidMount() {
-    fetchHighscores().then(response => {
-      this.setState({
-        highscores: response
-      })
-    });
-  }
+  componentDidMount() {}
 
   async setHighscores() {
     await fetchHighscores().then(response => {
@@ -67,9 +62,16 @@ class Menu extends Component {
     openHighscores();
   }
 
-  checkDisplaySize() {
-
+  async setSettings() {
+    await fetchSettings().then(response => {
+      this.setState({
+        settings: response
+      })
+    });
+    openSettings();
   }
+
+  checkDisplaySize() {}
 
   render () {
     let buttons = this.state.buttons.map((button, i) => {
@@ -83,13 +85,13 @@ class Menu extends Component {
       <section id="main-menu">
       <h1>Letter Detonator</h1>
       <h3>By <a href="http://srenshawpanting.co.uk/" target="_blank">SRP</a></h3>
-      <h3 className="warning">This game requires a keyboard to be played!</h3>
+      <p className="warning">This game requires a keyboard to be played!</p>
       {buttons}
       </section>
       <HighscoreMenu scores={this.state.highscores} />
       <HowtoplayMenu />
       <ControlsMenu />
-      <SettingsMenu />
+      <SettingsMenu currentSettings={this.state.settings} />
       <PauseMenu />
       <GameoverMenu />
       </div>
@@ -104,6 +106,13 @@ const fetchHighscores = async () => {
     scoresArr.push(scoresJSON[i])
   }
   return scoresArr;
+}
+
+const fetchSettings = async () => {
+  const playerCharacterJSON = await getStorageEntry('playerCharacter');
+  const letterJSON = await getStorageEntry('letter');
+  const split = letterJSON.font.split(" ");
+  return { font: split[1], fontSize: split[0], playerCharacter: playerCharacterJSON.id };
 }
 
 export default Menu;

@@ -15,6 +15,11 @@ class ControlsMenu extends Component {
           title: "Return",
           action: () => openMainMenu(),
         }
+      ],
+      controls: [
+        { key: "KEY", action: "ACTION" },
+        { key: "Escape (ESC)", action: "Open pause menu while playing" },
+        { key: "a-z", action: "Detonate corresponding letter" }
       ]
     };
   }
@@ -26,12 +31,21 @@ class ControlsMenu extends Component {
       )
     });
 
+    let controls = this.state.controls.map((control, i) => {
+      return (
+        <div key={i} className="control-entry">
+        <p>{control.key}:</p>
+        <p> {control.action}</p>
+        </div>
+      )
+    })
+
     return (
       <section id="controls-menu">
       <h1>Controls</h1>
       <h3>You'll need these</h3>
       <div className="menu-content">
-      <p>Coming soon! But for now you'll just have to wing it.</p>
+      {controls}
       </div>
       {buttons}
       </section>

@@ -88,7 +88,12 @@ const paintCircle = (x, y, radius, color) => {
 */
 const levelHandler = () => {
   const bg = document.getElementById('root');
-  if (score > 200) {
+  if (score > 250) {
+    level = 11;
+    letter.chance = 0.125;
+    maxLetterCount = 100;
+    bg.className = 'level-eleven';
+  } else if (score > 200) {
     level = 10;
     letter.chance = 0.1;
     maxLetterCount = 80;

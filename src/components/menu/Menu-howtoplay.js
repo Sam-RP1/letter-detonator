@@ -43,7 +43,7 @@ class HowtoplayMenu extends Component {
       <p>To protect your character you must detonate letters causing them explode by correctly pressing the corresponding letter key on your keyboard.</p>
       <img src={clickingBanner} alt="Click the letter to detonate it and make it explode"></img>
       <p>Each time you successfully detonate a letter your score will increase by 1. However, each time you detonate a letter that is not present your score will decrease by 1.</p>
-      <p>Currently the game has ten levels and each time you reach a new level the games difficulty will increase. This difficulty increase could result in a greater chance of a new letter appearing and/or the maximum number of letters that can be present at a time increasing.</p>
+      <p>Currently the game has 11 levels and each time you reach a new level the games difficulty will increase. This difficulty increase could result in a greater chance of a new letter appearing and/or the maximum number of letters that can be present at a time increasing.</p>
       <p>You can find your current level and score located at the top left of the screen when playing.</p>
       <img src={levelAndScoreBanner} alt="Level and score are located in the top left"></img>
       <p>The game is over when a letter gets too close to your character!</p>
