@@ -5,7 +5,6 @@ import {hot} from 'react-hot-loader';
 import '../../styles/root.scss';
 import './Menu.scss';
 
-// import MainMenu from './Menu-main.js';
 import HighscoreMenu from './Menu-highscore.js';
 import HowtoplayMenu from './Menu-howtoplay.js';
 import ControlsMenu from './Menu-controls.js';
@@ -51,8 +50,6 @@ class Menu extends Component {
     this.checkDisplaySize = this.checkDisplaySize.bind(this);
   }
 
-  componentDidMount() {}
-
   async setHighscores() {
     await fetchHighscores().then(response => {
       this.setState({
@@ -63,8 +60,8 @@ class Menu extends Component {
   }
 
   async setSettings() {
-    await fetchSettings().then(response => {
-      this.setState({
+    await fetchSettings().then(async response => {
+      await this.setState({
         settings: response
       })
     });
@@ -91,7 +88,7 @@ class Menu extends Component {
       <HighscoreMenu scores={this.state.highscores} />
       <HowtoplayMenu />
       <ControlsMenu />
-      <SettingsMenu currentSettings={this.state.settings} />
+      <SettingsMenu currentSettings={this.state.settings} fetchSettings={fetchSettings} />
       <PauseMenu />
       <GameoverMenu />
       </div>
@@ -112,7 +109,7 @@ const fetchSettings = async () => {
   const playerCharacterJSON = await getStorageEntry('playerCharacter');
   const letterJSON = await getStorageEntry('letter');
   const split = letterJSON.font.split(" ");
-  return { font: split[1], fontSize: split[0], playerCharacter: playerCharacterJSON.id };
+  return { font: split[1], fontSize: split[0], playerCharacterName: playerCharacterJSON.name, playerCharacterId: playerCharacterJSON.id };
 }
 
 export default Menu;

@@ -41,11 +41,12 @@ if (!Object.keys) {
   }());
 }
 
-const ver = "build-0.9.5";
+const ver = "build-1.0.0";
 
 // Default Game Settings & Variables
 const gameDefaults = {
   playerCharacter: {
+    name: "White Alien",
     id: 1,
   },
   letter: {
@@ -113,11 +114,12 @@ const gameDefaults = {
       achieved: null
     }
   },
-  initialised: "build-0.9.5",
+  initialised: "build-1.0.0",
 };
 
 // Settings & Variables
 const playerCharacter = {
+  name: undefined,
   id: undefined,
   radius: 18
 };
@@ -149,6 +151,22 @@ const getStorageEntry = (key) => {
     return JSON.parse(value);
   } else {
     return value.split(',');
+  }
+}
+
+const setSetting = (key, value, object) => {
+  if (typeof value === 'object') {
+    if (Array.isArray(value)) {
+      ldStorage.setItem(key, value.toString());
+    } else {
+      ldStorage.setItem(key, JSON.stringify(value));
+    }
+  } else {
+    ldStorage.setItem(key, value);
+  }
+  const valueKeys = Object.keys(value);
+  for (let i = 0; i < valueKeys.length ; i++) {
+    object[valueKeys[i]] = value[valueKeys[i]];
   }
 }
 

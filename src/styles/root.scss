@@ -1,5 +1,18 @@
 @import 'mixins/transition';
 
+/*----------------------------------------*\
+root.scss
+
+ROOT
+
+- Element Tags
+- Canvas
+- Levels
+\*----------------------------------------*/
+
+/*----------------------------------------*\
+Element Tags
+\*----------------------------------------*/
 body {
   height: 100vh;
   width: 100vw;
@@ -28,6 +41,9 @@ a:link, a:visited, a:hover  {
   text-decoration: none;
 }
 
+/*----------------------------------------*\
+Canvas
+\*----------------------------------------*/
 #canvas {
   position: fixed;
   z-index: 8;
@@ -41,6 +57,9 @@ a:link, a:visited, a:hover  {
   background-color: #0A81B1;
 }
 
+/*----------------------------------------*\
+Levels
+\*----------------------------------------*/
 .level-one {
   background-color: #51c5f5;
 }
