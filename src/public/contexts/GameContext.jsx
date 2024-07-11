@@ -15,7 +15,49 @@
 
 // First Flight, Orbital Patrol, Perilous Expedition, One way journey
 
+// Different ships could have different perks or abilities
+// Gotta unlock ships
+// Ship selection or customisation screen
+
 // Modifiers:
 // - No shop
 // - I'm broke (no money)
 // -
+
+// Main Menu:
+// Launch (Play)
+// Load
+// Leaderboards
+// Logbook
+// Codex
+// Profile (Account)
+// Stats
+// Settings
+
+// Pause Menu:
+// Resume
+// Restart
+// Save
+// Settings
+// Quit
+
+import React, { createContext, useContext, useState } from "react";
+
+const GameContext = createContext();
+
+export const GameProvider = ({ children }) => {
+  const [gameState, setGameState] = useState({
+    status: "loading",
+    canvas: {},
+    difficulty: {},
+    score: 0,
+  });
+
+  // Context value
+  const value = { gameState, setGameState };
+
+  return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
+};
+
+// Custom hook for easy context consumption
+export const useGameContext = () => useContext(GameContext);
