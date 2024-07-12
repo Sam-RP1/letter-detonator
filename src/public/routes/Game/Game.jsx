@@ -1,4 +1,6 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React, { useState, useCallback, useEffect, useMemo, useRef } from "react";
+
+import debounce from "./utils/debounce.js";
 
 import generateLetter from "./utils/generateLetter.js";
 import updateLetters from "./utils/updateLetters.js";
@@ -92,12 +94,28 @@ const Game = () => {
     },
   };
 
-  const updateCanvasSize = useCallback(() => {
-    setCanvasSize({
-      height: window.innerHeight,
-      width: window.innerWidth,
-    });
-  }, []);
+  const debouncedUpdateCanvasSize = useMemo(
+    () =>
+      debounce(() => {
+        const aspectRatio = gameState.canvas.settings.baseline.aspectRatio;
+        // Start with the assumption that we're adjusting based on width
+        let currentWidth = window.innerWidth;
+        let newHeight = currentWidth / aspectRatio;
+        // If the new height is greater than the window's height, adjust based on height instead
+        if (newHeight > window.innerHeight) {
+          newHeight = window.innerHeight;
+          currentWidth = newHeight * aspectRatio; // Recalculate width based on height to maintain aspect ratio
+        }
+
+        setCanvasSize({
+          width: currentWidth,
+          height: newHeight,
+        });
+      }, 100),
+    [gameState.canvas.settings.baseline.aspectRatio]
+  ); // Dependencies for recreating the debounced function
+
+  const updateCanvasSize = useCallback(debouncedUpdateCanvasSize, [debouncedUpdateCanvasSize]);
 
   useEffect(() => {
     updateCanvasSize();
@@ -105,15 +123,24 @@ const Game = () => {
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, []);
 
-  const scaleAndDrawAssets = () => {};
-
   useEffect(() => {
     // Canvas properties
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    canvas.width = canvasSize.width;
-    canvas.height = canvasSize.height;
+    const width = canvasSize.width;
+    const height = canvasSize.height;
+
+    // This set the number of pixels in the canvas itself
+    // Y axis has number of height pixels
+    // X axis has number of width pixels
+    canvas.width = width;
+    canvas.height = height;
+
+    // This sets the size of the canvas in the browser
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
     canvas.style.backgroundColor = gameState.canvas.settings.backgroundColor;
 
     ctx.font = gameState.letters.settings.size + " " + gameState.letters.settings.font;
@@ -123,12 +150,7 @@ const Game = () => {
       if (gameState.letters.instances.length >= gameState.letters.settings.maxInstances) return;
       if (Math.random() >= gameState.letters.settings.spawnChance) return;
 
-      const newLetter = generateLetter(
-        gameState.letters.settings.minTime,
-        gameState.letters.settings.maxTime,
-        canvasSize.height,
-        canvasSize.width
-      );
+      const newLetter = generateLetter(gameState.letters.settings.minTime, gameState.letters.settings.maxTime, canvasSize.height, canvasSize.width);
 
       gameState.letters.instances.push(newLetter);
     }, gameState.letters.settings.spawnInterval);
@@ -141,10 +163,9 @@ const Game = () => {
 
     // The game loop function
     const gameLoop = () => {
-      ctx.fillText("Score: " + gameState.score, 15, 30);
-
       // Clear the canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillText("Score: " + gameState.score, 15, 30);
 
       // Rectangle dimensions
       const rectWidth = 50;
@@ -188,9 +209,7 @@ const Game = () => {
 
     const handleKeyDown = (e) => {
       if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
-        const index = gameState.letters.instances.findIndex(
-          (letter) => letter.code.toLowerCase() === e.key.toLowerCase()
-        );
+        const index = gameState.letters.instances.findIndex((letter) => letter.code.toLowerCase() === e.key.toLowerCase());
 
         if (index !== -1) {
           const newExplosion = generateExplosion(
