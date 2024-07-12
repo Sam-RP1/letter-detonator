@@ -47,7 +47,7 @@ const Game = () => {
         width: canvasSize.width,
         centerY: canvasSize.height / 2,
         centerX: canvasSize.width / 2,
-        backgroundColor: "#000",
+        backgroundColor: "#777",
         backgroundImg: background,
       },
     },
@@ -92,47 +92,10 @@ const Game = () => {
     },
   };
 
-  const sprite = new Image();
-  sprite.src = SpriteImg;
-
   const updateCanvasSize = useCallback(() => {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
-    const screenRatio = screenWidth / screenHeight;
-
-    let gameWidth, gameHeight;
-
-    const aspect = 16 / 9;
-
-    if (screenRatio >= aspect) {
-      // Screen is wider than the game aspect ratio
-      gameHeight = screenHeight;
-      gameWidth = gameHeight * aspect;
-    } else {
-      // Screen is narrower than the game aspect ratio
-      gameWidth = screenWidth;
-      gameHeight = gameWidth / aspect;
-    }
-
-    console.log(
-      "UPDATE CANVAS SIZE: ",
-      "screenWidth: ",
-      screenWidth,
-      "screenHeight: ",
-      screenHeight,
-      "screen aspect ratio: ",
-      screenRatio,
-      "gameWidth: ",
-      gameWidth,
-      "gameHeight: ",
-      gameHeight,
-      "game aspect ratio: ",
-      aspect
-    );
-
     setCanvasSize({
-      height: gameHeight,
-      width: gameWidth,
+      height: window.innerHeight,
+      width: window.innerWidth,
     });
   }, []);
 
@@ -142,98 +105,19 @@ const Game = () => {
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, []);
 
-  const scaleAndDrawAssets = () => {
-    // Get canvas context
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    const ratio = window.devicePixelRatio;
-
-    // Original dimensions from the canvas settings
-    const originalWidth = gameState.canvas.settings.baseline.resolution.width;
-    const originalHeight = gameState.canvas.settings.baseline.resolution.height;
-    const originalAspectRatio = gameState.canvas.settings.baseline.aspectRatio;
-    console.log(
-      "scaleAndDrawAssets: ",
-      "ORIGINAL WIDTH: ",
-      originalWidth,
-      "ORIGINAL HEIGHT: ",
-      originalHeight,
-      "ORIGINAL ASPECT RATIO: ",
-      originalAspectRatio
-    );
-
-    // Current dimensions from the canvas element
-    const currentWidth = canvas.width;
-    const currentHeight = canvas.height;
-    const screenRatio = currentWidth / currentHeight;
-    console.log(
-      "scaleAndDrawAssets: ",
-      "CURRENT WIDTH: ",
-      currentWidth,
-      "CURRENT HEIGHT: ",
-      currentHeight,
-      "CURRENT ASPECT RATIO: ",
-      currentWidth / currentHeight
-    );
-
-    // Calculate scale factors
-    const scaleX = currentWidth / originalWidth;
-    const scaleY = currentHeight / originalHeight;
-
-    let gameWidth, gameHeight;
-
-    if (screenRatio >= originalAspectRatio) {
-      // Screen is wider than the game aspect ratio
-      gameHeight = currentHeight;
-      gameWidth = gameHeight * originalAspectRatio;
-    } else {
-      // Screen is narrower than the game aspect ratio
-      gameWidth = currentWidth;
-      gameHeight = gameWidth / originalAspectRatio;
-    }
-
-    // Clear the canvas before drawing
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Apply scale to canvas context
-    ctx.scale(scaleX, scaleY);
-    console.log("scaleAndDrawAssets: ", "SCALE X: ", scaleX, "SCALE Y: ", scaleY);
-
-    const backgroundImg = new Image();
-    backgroundImg.src = gameState.canvas.settings.backgroundImg;
-
-    // Ensure the image is loaded before drawing
-    backgroundImg.onload = function () {
-      // Draw the image on the canvas, fitting it to the canvas size
-      ctx.drawImage(backgroundImg, 0, 0, canvas.width, canvas.height);
-    };
-  };
-
-  // Effect to draw on canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-
-    // Clear the canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Adjust canvas size
-    canvas.width = canvasSize.width;
-    canvas.height = canvasSize.height;
-
-    // Scale and redraw assets
-    scaleAndDrawAssets(ctx);
-  }, [canvasSize]); // Redraw when canvas size changes
+  const scaleAndDrawAssets = () => {};
 
   useEffect(() => {
     // Canvas properties
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
+    canvas.width = canvasSize.width;
+    canvas.height = canvasSize.height;
+    canvas.style.backgroundColor = gameState.canvas.settings.backgroundColor;
+
     ctx.font = gameState.letters.settings.size + " " + gameState.letters.settings.font;
     ctx.fillStyle = gameState.letters.settings.color;
-
-    scaleAndDrawAssets();
 
     const letterGenerationInterval = setInterval(() => {
       if (gameState.letters.instances.length >= gameState.letters.settings.maxInstances) return;
@@ -275,7 +159,10 @@ const Game = () => {
       const rectY = centerY - rectHeight / 2;
 
       // Draw the rectangle
+      ctx.fillStyle = "red";
       ctx.fillRect(rectX, rectY, rectWidth, rectHeight);
+
+      ctx.fillStyle = "#fff";
 
       updateLetters(gameState.letters.instances);
       updateExplosions(gameState.explosions.instances, gameState.explosions.settings);
@@ -338,7 +225,7 @@ const Game = () => {
         <canvas ref={canvasRef} id="canvas"></canvas>
       </section>
 
-      {/* <div
+      <div
         style={{
           position: "fixed",
           left: "50%",
@@ -346,8 +233,18 @@ const Game = () => {
           transform: "translate(-50%, -50%)",
         }}
       >
-        <img id="Sprite" src={SpriteImg} alt="Character" />
-      </div> */}
+        <div
+          style={{
+            height: "5px",
+            width: "5px",
+            position: "fixed",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            backgroundColor: "blue",
+          }}
+        ></div>
+      </div>
     </>
   );
 };
