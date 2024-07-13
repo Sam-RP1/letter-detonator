@@ -1,92 +1,64 @@
-const webpack = require("webpack");
 const path = require("path");
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
-  entry: {
-    index: "./src/index.js",
+  // Entry point of your application
+  entry: "./src/public/index.jsx",
+
+  // Output configuration
+  output: {
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
   },
-  mode: "development",
+
+  // Development server configuration
+  devServer: {
+    static: {
+      directory: path.join(__dirname, "public"),
+    },
+    compress: true,
+    port: 3000, // You can specify your desired port here
+  },
+
+  // Module rules for processing different file types
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        loader: "babel-loader",
-        options: {
-          presets: ["@babel/env", "@babel/preset-react"],
-          plugins: ["@babel/plugin-transform-runtime"]
-        }
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
+        },
       },
       {
-        test: /\.(sa|sc|c)ss$/,
+        test: /\.s[ac]ss$/i, // Pattern to match .scss or .sass files
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: process.env.NODE_ENV === 'development',
-              publicPath: '../',
-            },
-          },
-          'css-loader',
-          'sass-loader',
+          "style-loader", // Injects CSS into the DOM via a <style> tag
+          "css-loader", // Translates CSS into CommonJS modules
+          "sass-loader", // Compiles Sass to CSS
         ],
       },
       {
-        test: /\.(png|jpe?g|svg|gif)$/i,
-        loader: 'file-loader',
-        options: {
-          outputPath: './assets/images',
-          esModule: false,
-        },
-      }
-    ]
+        test: /\.(png|jpe?g|gif)$/i, // Pattern to match image files
+        type: "asset/resource", // Use asset module
+      },
+    ],
   },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
-  output: {
-    path: path.resolve(__dirname, "build/"),
-    filename: "bundles/[name].bundle.js"
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "src/"),
-    port: 3000,
-    publicPath: "http://localhost:3000/",
-    hotOnly: true
-  },
+
+  // Plugins configuration
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: 'css/[name].css',
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: 'src/pages/index.html', to: '' },
-        { from: 'src/scripts/fpsmeter.min.js', to: 'scripts' },
-        { from: 'src/scripts/engine.js', to: 'scripts' },
-        { from: 'src/scripts/letter-detonator.js', to: 'scripts' },
-        { from: 'src/scripts/menu-controller.js', to: 'scripts' },
-        { from: 'src/scripts/ld-storage-controller.js', to: 'scripts' },
-        { from: 'src/assets/characters/Dude_Monster.png', to: 'assets/characters' },
-        { from: 'src/assets/characters/Owlet_Monster.png', to: 'assets/characters' },
-        { from: 'src/assets/characters/Pink_Monster.png', to: 'assets/characters' },
-      ],
+    new HtmlWebpackPlugin({
+      template: "./src/public/html/index.html", // Path to your HTML template
+      filename: "./index.html",
     }),
   ],
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        cache: true,
-        parallel: true,
-        terserOptions: {},
-      })
-    ],
-    removeEmptyChunks: true,
-    mergeDuplicateChunks: true,
-  },
+
+  // Enable source maps for debugging
+  devtool: "source-map",
+
+  // Mode configuration (development or production)
+  mode: "development",
 };
