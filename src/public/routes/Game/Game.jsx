@@ -39,17 +39,17 @@ const Game = () => {
     canvas: {
       settings: {
         baseline: {
-          resolution: {
-            width: 1920,
-            height: 1080,
-          },
+          drawingBufferWidth: 1920,
+          drawingBufferHeight: 1080,
           aspectRatio: 16 / 9,
+          scale: 1,
         },
-        height: canvasSize.height,
-        width: canvasSize.width,
-        centerY: canvasSize.height / 2,
-        centerX: canvasSize.width / 2,
-        backgroundColor: "#777",
+        current: {
+          drawingBufferWidth: canvasSize.width,
+          drawingBufferHeight: canvasSize.height,
+          aspectRatio: canvasSize.width / canvasSize.height,
+          scale: canvasSize.width / 1920,
+        },
         backgroundImg: background,
       },
     },
@@ -94,6 +94,7 @@ const Game = () => {
     },
   };
 
+  // ----------------- Canvas Size
   const debouncedUpdateCanvasSize = useMemo(
     () =>
       debounce(() => {
@@ -111,6 +112,10 @@ const Game = () => {
           width: currentWidth,
           height: newHeight,
         });
+
+        gameState.canvas.settings.current.scale = currentWidth / gameState.canvas.settings.baseline.drawingBufferWidth;
+
+        // calculateScale(currentWidth, newHeight);
       }, 100),
     [gameState.canvas.settings.baseline.aspectRatio]
   ); // Dependencies for recreating the debounced function
@@ -122,26 +127,35 @@ const Game = () => {
     window.addEventListener("resize", updateCanvasSize);
     return () => window.removeEventListener("resize", updateCanvasSize);
   }, []);
+  // ----------------------------
 
   useEffect(() => {
     // Canvas properties
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
 
-    const width = canvasSize.width;
-    const height = canvasSize.height;
+    const dpr = window.devicePixelRatio || 1;
+
+    const width = gameState.canvas.settings.current.drawingBufferWidth;
+    const height = gameState.canvas.settings.current.drawingBufferHeight;
 
     // This set the number of pixels in the canvas itself
     // Y axis has number of height pixels
     // X axis has number of width pixels
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    ctx.scale(dpr, dpr);
 
     // This sets the size of the canvas in the browser
     canvas.style.width = `${width}px`;
     canvas.style.height = `${height}px`;
 
-    canvas.style.backgroundColor = gameState.canvas.settings.backgroundColor;
+    const backgroundImage = new Image();
+    backgroundImage.src = gameState.canvas.settings.backgroundImg;
+
+    backgroundImage.onload = () => {
+      ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    };
 
     ctx.font = gameState.letters.settings.size + " " + gameState.letters.settings.font;
     ctx.fillStyle = gameState.letters.settings.color;
@@ -165,11 +179,16 @@ const Game = () => {
     const gameLoop = () => {
       // Clear the canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
       ctx.fillText("Score: " + gameState.score, 15, 30);
 
+      const scale = gameState.canvas.settings.current.scale;
+
       // Rectangle dimensions
-      const rectWidth = 50;
-      const rectHeight = 50;
+      const rectWidth = Math.round(50 * scale);
+      const rectHeight = Math.round(50 * scale);
 
       // Calculate center of the canvas
       const centerX = canvas.width / 2;
